@@ -45,4 +45,5 @@ for i in range(R):
             f_queue.append((i, j))
         elif graph[i][j] == 'J':
             j_queue.append((i, j))
+
 print(bfs())
