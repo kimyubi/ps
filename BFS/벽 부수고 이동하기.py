@@ -1,7 +1,6 @@
 # n개의 줄, m개의 숫자
 from collections import deque
 import sys
-from turtle import isvisible
 
 input = sys.stdin.readline
 
@@ -20,8 +19,8 @@ def bfs():
     while queue:
         x,y,w = queue.popleft()
         
-        if  x == n-1 and y == m-1:
-                return visited[nx][ny][w]
+        if x == n-1 and y == m-1:
+            return visited[x][y][w]
     
         for i in range(4):
             nx, ny = x + dx[i], y + dy[i]
