@@ -1,6 +1,5 @@
 from collections import deque
 import sys
-from turtle import distance
 
 input = sys.stdin.readline
 
