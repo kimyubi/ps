@@ -33,3 +33,5 @@ visited = [0] * n
 ans = 0
 dfs(0)
 
+print(ans)
+
