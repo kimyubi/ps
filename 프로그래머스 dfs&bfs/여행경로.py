@@ -1,38 +1,36 @@
-# 테케 1번 통과 못함
+from collections import defaultdict 
 
-from collections import deque
+def dfs(graph, N, key, footprint):
+    if len(footprint) == N + 1:
+        return footprint
+
+    for idx, country in enumerate(graph[key]):
+        graph[key].pop(idx)
+
+        tmp = footprint[:]
+        tmp.append(country)
+
+        ret = dfs(graph, N, country, tmp)
+
+        graph[key].insert(idx, country)
+
+        if ret:
+            return ret
+
 
 def solution(tickets):
-    tickets = list(tickets)
-    visited = [False] * (len(tickets))
-    
     answer = []
-    queue = deque()
-    
-    tickets.sort()
-    for i, ticket in enumerate(tickets):
-        if ticket[0] == 'ICN':
-            answer.append(ticket[0])
-            answer.append(ticket[1])
-            
-            queue.append(ticket)
-            visited[i] = True
-            break
-        
-    
-    while queue:
-        pre = queue.popleft()
-        
-        for i, ticket in enumerate(tickets):
-            if pre[1] == ticket[0] and not visited[i]:
-                print(ticket)
-                visited[i] = True
-                
-                answer.append(ticket[1])
-                queue.append(ticket)
-    
+
+    graph = defaultdict(list)
+
+    N = len(tickets)
+    for ticket in tickets:
+        graph[ticket[0]].append(ticket[1])
+        graph[ticket[0]].sort()
+
+    answer = dfs(graph, N, "ICN", ["ICN"])
+
     return answer
-    
 
 
-print(solution( [["ICN", "A"], ["A", "B"], ["A", "C"], ["C", "A"], ["B", "D"]]))
+print(solution([["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL","SFO"]]))
