@@ -2,7 +2,7 @@ import copy
 dx = [-1, -1, 0, 1, 1, 1, 0, -1]
 dy = [0, -1, -1, -1, 0, 1, 1 , 1]
 
-# 물고기 번호가 0 이면 상어
+# 물고기 번호가 0 이면 상어 -1이면 빈칸
 fish = []
 
 for i in range(4):
@@ -66,7 +66,9 @@ def fish_move(x, y, num, direction):
         
         else:
             if fish[nx][ny] != 0:
-                fish[nx][ny][0], fish[nx][ny][1] = fish[x][y][0], fish[x][y][1]
+                fish[nx][ny][0], fish[x][y][0] = fish[x][y][0], fish[nx][ny][0]
+                fish[nx][ny][1], fish[x][y][1] = fish[x][y][0], direction
+                return
             
     
 
@@ -83,17 +85,18 @@ def solution(n,x,y,direction):
         
         else:
             cnt, new_shark_position = shark_move(new_n,new_x,new_y,new_direction)
-            fish[new_shark_position[0]][new_shark_position[1]][0] = 0
+            fish[new_shark_position[0]][new_shark_position[1]][0] = -1
+            result += cnt
             
     
         for f in fish_sort():
             fish_move(*f)
             
         new_n,new_x,new_y,new_direction = new_shark_position[0], new_shark_position[1], fish[new_shark_position[0]][new_shark_position][1]
-        
+        fish[new_shark_position[0]][new_shark_position[1]][0] = 0
 
 
-
+    return cnt
     
 print(solution(0,0,0,fish[0][0][1]))
 
