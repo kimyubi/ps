@@ -36,11 +36,13 @@ def dfs(depth):
     global tmp
     
     if depth == 5:
+        # 출구가 들어갈 수 있는 칸이라면
         if tmp[4][4][4]:
             bfs(tmp)
         return
 
     for i in range(4):
+        # 입구가 들어갈 수 있는 칸이라면
         if tmp[0][0][0]:
             dfs(depth+1)
         
@@ -49,9 +51,8 @@ def dfs(depth):
   
 def bfs(b):
     global result
-    q = deque()
+    q = deque([(0,0,0)])
     dist = [[[0] * 5 for _ in range(5)] for _ in range(5)]
-    q.append((0, 0, 0))
 
     while q:
         h, y, x = q.popleft()
@@ -66,15 +67,14 @@ def bfs(b):
             nh = h + dz[i]
             ny = y + dy[i]
             nx = x + dx[i]
-
-            if nh < 0 or nh >= 5 or ny < 0 or ny >= 5 or nx < 0 or nx >= 5:
-                continue
             
-            elif b[nh][ny][nx] == 0 or dist[nh][ny][nx] != 0:
-                continue
+            if 0 <= nh < 5 and 0 <= nx < 5 and 0 <= ny < 5:
+                if b[nh][ny][nx] == 1 and dist[nh][ny][nx] == 0:
+                    q.append((nh, ny, nx))
+                    dist[nh][ny][nx] = dist[h][y][x] + 1
+                    
             
-            q.append((nh, ny, nx))
-            dist[nh][ny][nx] = dist[h][y][x] + 1
+            
             
 solution()
 
