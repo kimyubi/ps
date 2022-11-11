@@ -1,130 +1,59 @@
-# 20: 40
 import sys
 from collections import deque
 
+# 전처리 부분
 input = sys.stdin.readline
+dx = [0, -1, 0, 1]
+dy = [1, 0, -1, 0]
 
-# 보드의 크기 (n x n)
+# 알고리즘 부분
+def dummy():
+    x, y = 1, 1
+    time, dir = 0, 0
+
+    board[x][y] = 1
+    dq = deque([[x,y]])
+
+    while True:
+        time += 1
+
+        x = x + dx[dir]
+        y = y + dy[dir]
+        
+
+        if x < 1 or x > n or y < 1 or y > n or board[x][y] == 1: break
+
+        if board[x][y] == 0:
+            tail_x, tail_y = dq.popleft()
+            board[tail_x][tail_y] = 0
+
+        board[x][y] = 1
+        dq.append([x, y]) 
+        
+        if time in times.keys():
+            if times[time] == 'L':
+                dir = (dir + 1) % 4
+                
+            else: dir = (dir + 3) % 4
+
+    return time
+
+# 변수 선언 및 초기화 부분
 n = int(input())
-
-# 뱀 -1, 빈 칸 0, 사과 1
-board = [[0] * n for _ in range(n)]
-board[0][0] = -1
-r, y = 0, 0
-d = 1
-
-
-# 사과의 갯수
 k = int(input())
 
-# 보드에 사과의 위치 표시
+board = [[0] * (n + 1) for _ in range(n + 1)]
+
 for _ in range(k):
-    i,j = map(int, input().split())
-    board[i][j] = 1
+    r, c = map(int, input().split())
+    board[r][c] = 2
     
-    
-# 뱀의 방향 전환 횟수
 l = int(input())
 
-# 북, 동, 남, 서
-dx = [-1,0,1,0]
-dy = [0,1,0,-1]
-
-
-
-# 왼쪽으로 90도 회전 (d+3)%4
-# 오른쪽으로 90도 회전 (d+1)%4
-turnabout = deque()
-
+times = {}
 for _ in range(l):
-    
-    # 정수 x,  문자 c
-    # 게임 시작 시간으로부터 x초가 끝난 뒤에 왼쪽(c==l) 또는 오른쪽(c==d)으로 90도 방향을 회전시킨다는 뜻이다.
-    x, c = input().split()
-    turnabout.append([int(x),c])
-    
-time = 0
+    t, d = input().split()
+    times[int(t)] = d
 
-def solution(r,y,d):
-    global time
-    last_x,last_y,last_d = 0,0,0
-    start = 0
-    while turnabout:
-        x,c = turnabout.popleft()
-        print(start,x,d)
-        
-        for b in board:
-            print(b)
-        for _ in range(start, x):
-            nr, ny = r + dx[d], y + dy[d]
-            time += 1
-            if 0 <= nr < n and 0 <= ny < n:
-                # 뱀이 기어다니다가 자기자신의 몸과 부딪히면 게임이 끝난다.
-                if board[nr][ny] == -1:
-                    return
-                
-                if board[nr][ny] == 1:
-                    board[nr][ny] = -1
-                    
-                if board[nr][ny] == 0:
-                    board[nr][ny] = -1
-                    board[r][y] = 0
-            
-                r,y = nr, ny
-                start = x
-                last_x, last_y = r,y
-                
-                
-             
-            # 뱀이 기어다니다가 벽과 부딪히면 게임이 끝난다.
-            else:
-                return
-                
-        
-        if c == 'L':
-            d = (d+3)%4
-            
-        elif c == 'D':
-            d = (d+1)%4       
-        
-        last_d = d  
-                    
-    
-    
-    print(last_x,last_y,last_d)
-    r,y,d = last_x,last_y,last_d
-    print(r,y,d)
-    for b in board:
-            print(b)
-            
-    while True:
-        nr, ny = r + dx[d], y + dy[d]
-        time += 1
-        if 0 <= nr < n and 0 <= ny < n:
-            # 뱀이 기어다니다가 자기자신의 몸과 부딪히면 게임이 끝난다.
-            if board[nr][ny] == -1:
-                return
-                    
-            if board[nr][ny] == 1:
-                board[nr][ny] = -1
-                        
-            if board[nr][ny] == 0:
-                board[nr][ny] = -1
-                board[r][y] = 0
-        
-        else:
-            return
-        
-        r,y = nr, ny
-        
-        for b in board:
-            print(b)
-                
-            
-            
-            
-        
-solution(r,y,d)    
-print(time)
-
-# 3번테케 안됨
+# 메인 코드 부분
+print(dummy())
