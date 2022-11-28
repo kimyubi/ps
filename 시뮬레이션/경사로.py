@@ -15,6 +15,8 @@ def check_line(line):
         if abs(line[i] - line[i - 1]) > 1:
             return False
         
+        # 경사로는 낮은 칸에 놓는다.
+        
         if line[i] < line[i - 1]:
             for j in range(l):
                 
@@ -26,7 +28,7 @@ def check_line(line):
                     slope[i + j] = True
                     
                     
-        elif line[i] > line[i - 1]:
+        elif line[i - 1] < line[i]:
             for j in range(l):
                 
                 # 경사로를 놓다가 범위를 벗어나는 경우 / 낮은 지점의 칸의 높이가 모두 같지 않거나, L개가 연속되지 않는 경우 / 경사로를 놓은 곳에 또 경사로를 놓는 경우
@@ -35,7 +37,7 @@ def check_line(line):
                 
                 if line[i - 1] == line[i - 1 - j]:
                     slope[i - 1 - j] = True
-                    
+
     return True
 
 
