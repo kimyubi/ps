@@ -14,4 +14,4 @@ for i in range(1,len(s)):
         flag = s[i]
         ans[flag] += 1
     
-print(ans)
+print(min(ans))
