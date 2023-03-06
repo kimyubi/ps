@@ -36,5 +36,5 @@ def solution():
                 
     return ans
                 
-print(solution)
+print(solution())
         
