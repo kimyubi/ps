@@ -33,5 +33,5 @@ def solution(start, end):
         
 
             
-solution(houses[1] - houses[0], houses[n-1] - houses[0])
+solution(1, houses[n-1] - houses[0])
 print(ans)
