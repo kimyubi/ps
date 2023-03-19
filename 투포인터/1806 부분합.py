@@ -16,6 +16,9 @@ while True:
         
         total_sum -= nums[start]
         start += 1
+        
+    elif end == n:
+        break
     
     else:
         total_sum += nums[end]
