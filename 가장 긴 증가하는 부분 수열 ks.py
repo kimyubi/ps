@@ -11,6 +11,7 @@ for i in range(n):
     tmp = list()
     for j in range(i):
         if nums[j] < nums[i]:
+            if LIS[j]
             x = list(LIS[j][0][:])
             print(x)
             x.append(nums[i])
