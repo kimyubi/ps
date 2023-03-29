@@ -7,7 +7,7 @@ def solution(S):
         
     ans =  len(max(input))
     
-    if "<" not in max(input) and ">" not in max(input):
+    if not("<" in max(input)) and not( ">" in max(input):
         if ans % 2 != 0:
             print(ans -1)
         else:

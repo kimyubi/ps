@@ -14,7 +14,7 @@ def solution(distance, rocks, n):
         
         # 제거한 바위 개수
         remove_cnt = 0
-        # 이전 바위의 위치
+        # 이전 바위
         prev_rock = 0
         for rock in rocks:
             dist = rock - prev_rock
