@@ -12,8 +12,7 @@ def split_network(dic,n):
                 visited[next] = True
                 queue.append(next)
     
-    visited = visited[1::]
-    return abs(visited.count(False) - visited.count(True))
+    return abs(visited.count(False)-1 - visited.count(True))
                 
                 
 def solution(n, wires):
