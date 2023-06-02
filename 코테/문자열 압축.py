@@ -26,11 +26,13 @@ def compression(s, n):
             
     
 def solution(s):
-    # 문자열 s의 최대 길이가 1000이므로, max 값을 1001로 잡는다.
-    answer = 1001
-    
     # 문자열의 길이
     n = len(s)
+    
+    if n == 1:
+        return 1
+    
+    answer = n
     
     # 문자열을 1개 ~ (문자열의 길이)개 단위로 잘라 압축하여 표현한다.
     for i in range(1, n + 1):
