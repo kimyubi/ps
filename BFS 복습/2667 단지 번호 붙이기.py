@@ -22,7 +22,7 @@ def bfs(i, j):
         for i in range(4):
             nx, ny = x + dx[i], y + dy[i]
             
-            if 0 <= nx < N and 0 <= ny < N:
+            if 0 <= nx < N and 0 <= ny < N: 
                 if not visited[nx][ny] and map[nx][ny]:
                     visited[nx][ny] = True
                     queue.append([nx, ny])
