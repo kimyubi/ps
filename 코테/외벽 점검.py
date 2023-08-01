@@ -25,3 +25,41 @@ def solution(n, weak, dist):
             weak.popleft()
         
     return -1
+
+
+
+def bfs(map_copy, visited):
+    for x in map_copy:
+        print(x)
+        
+    return 0 
+
+def spread_virus(map_copy):
+    queue = deque(deepcopy(virus))
+    
+    while queue:
+        x, y = queue.popleft()
+        
+        for i in range(4):
+            nx, ny = x + dx[i], y + dy[i]
+            if 0 <= nx < n and 0 <= ny < m:
+                # 빈 칸이면 바이러스가 퍼져나갈 수 있다.
+                if map_copy[nx][ny] != 1:
+                    map_copy[nx][ny] = 2
+                    queue.append([nx, ny])
+                    
+    return map_copy
+    
+    
+    
+for comb in combinations(candidate, 3):
+    map_copy = deepcopy(map)
+    visited = [[False] * m for _ in range(n)]
+    
+    for i, j in comb:
+        map_copy[i][j] = 1
+        
+    # 바이러스 퍼뜨리기
+    map_copy = spread_virus(map_copy)
+    
+    answer = max(answer, bfs(map_copy, visited))    
