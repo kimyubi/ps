@@ -1,6 +1,7 @@
 import sys
 from copy import deepcopy
 from collections import deque
+sys.setrecursionlimit(1000000)
 input = sys.stdin.readline
 
 dx = [-1, 1, 0, 0]
