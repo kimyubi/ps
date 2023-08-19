@@ -20,7 +20,7 @@ for i in range(n):
         obstacle[v] -= 1
         
         
-for i in range(1, n + 1):
+for i in range(1, h):
     obstacle[i] += obstacle[i-1]
 
 ans = min(obstacle)
