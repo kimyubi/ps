@@ -14,7 +14,7 @@ for i in range(1, n):
     # ->
     for j in range(1, m):
         start_left[j] = max(start_left[j], start_left[j-1] + arr[i][j])
-        
+            
     # <-
     for j in range(m-2, -1, -1):
         start_right[j] = max(start_right[j], start_right[j + 1] + arr[i][j])
