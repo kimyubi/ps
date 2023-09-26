@@ -1,5 +1,6 @@
 import sys
 input = sys.stdin.readline
+sys.setrecursionlimit(10**6)
 
 # 정점의 수 n, 루트의 번호 r, 쿼리의 수 q
 n, r, q = map(int, input().split())
