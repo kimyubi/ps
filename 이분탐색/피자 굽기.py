@@ -12,7 +12,7 @@ for i in range(d-1):
         ovens[i + 1]  = ovens[i]
         
 ovens = deque(ovens[::-1])
-
+print(ovens)
 result = []
 depth = d + 1
 
@@ -20,7 +20,6 @@ for dough in doughs:
     while ovens:
         depth -= 1
         x = ovens.popleft()
-        
         if x >= dough:
             result.append(depth)
             break
