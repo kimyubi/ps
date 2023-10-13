@@ -10,12 +10,10 @@ graph = [[] for _ in range(n + 1)]
 
 for _ in range(m):
     a, b, d = map(int, input().split())
-    # 수치 비교가 중요한게 아니라, 대소 비교가 중요하므로 거리 * 2를 하여 거리의 값을 전부 짝수로 만든다.
     graph[a].append((b, d * 2))
     graph[b].append((a, d * 2))
     
 dp_fox = [INF] * (n + 1)
-
 def dijstra_fox(start):
     dp_fox[start] = 0
     heap = []
@@ -32,34 +30,35 @@ def dijstra_fox(start):
                 dp_fox[next_node] = distance
                 heapq.heappush(heap, (distance, next_node))
                 
-# dp[0][i] : i번째 노드까지 느리게 도착한 경우 시간
-# dp[1][i] : i번째 노드까지 빠르게 도착한 경우 시간
+                
+# dp[0][i] : i번째 노드까지 느리게 도착한 경우 최소 시간
+# dp[1][i] : i번째 노드까지 빠르게 도착한 경우 최소 시간
 dp_wolf = [[INF] * (n + 1) for _ in range(2)]
 
 def dijstra_wolf(start):
     # 달빛 늑대는 출발할 때 오솔길 하나를 달빛 여우의 두 배의 속도로 달려간다.
-    twice_speed = False
-    dp_wolf[twice_speed][start] = 0
+    SPEED = False
+    dp_wolf[SPEED][start] = 0
     heap = []
-    heapq.heappush(heap, (0, start, twice_speed))
+    heapq.heappush(heap, (0, start, SPEED))
     
     
     while heap:
-        dist, node, twice_speed = heapq.heappop(heap)
-        if dp_wolf[twice_speed][node] < dist:
+        dist, node, SPEED = heapq.heappop(heap)
+        if dp_wolf[SPEED][node] < dist:
             continue
         
         for next_node, next_dist in graph[node]:
             # 현재 노드까지 빠르게 도착했다면, 다음 노드로 느리게 출발
-            if twice_speed:
+            if SPEED:
                 distance = dist + next_dist * 2
             else:
                 # 현재 노드까지 느리게 도착했다면, 다음 노드로 빠르게 출발
                 distance = dist + next_dist // 2
                 
-            if distance < dp_wolf[not twice_speed][next_node]:
-                dp_wolf[not twice_speed][next_node] = distance
-                heapq.heappush(heap, (distance, next_node, not twice_speed))
+            if distance < dp_wolf[not SPEED][next_node]:
+                dp_wolf[not SPEED][next_node] = distance
+                heapq.heappush(heap, (distance, next_node, not SPEED))
       
                     
          
@@ -67,7 +66,6 @@ dijstra_fox(1)
 dijstra_wolf(1)
 
 result = 0
-
 for i in range(1, n + 1):
     if dp_fox[i] < min(dp_wolf[0][i], dp_wolf[1][i]):
         result += 1
