@@ -27,7 +27,7 @@ def dijkstra(start):
         dist, node = heapq.heappop(queue)
         
         # 현재 노드가 이미 처리된 적 있는 노드라면 무시
-        if dist[node] < INF:
+        if distance[node] < dist:
             continue
         
         # 현재 노드와 인접한 노드들을 확인
