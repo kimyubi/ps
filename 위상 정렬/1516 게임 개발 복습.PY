@@ -23,7 +23,6 @@ def solution():
     queue = deque()
     result = [0] * (n + 1)  
     
-    
     for i in range(1 , n + 1):
         if not indegree[i]:
             queue.append(i)
@@ -39,5 +38,7 @@ def solution():
             if not indegree[next]:
                 queue.append(next)
     
-    print(result, end = '\n')   
+    for i in range(1, n + 1):
+        print(result[i])
+ 
 solution()   
