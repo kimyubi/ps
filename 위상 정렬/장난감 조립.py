@@ -25,27 +25,27 @@ def topology_sort(graph, indegree):
 
     while queue:
         node = queue.popleft()
-        for next_componet, cnt in graph[node]:
-            if indegree[next_componet]:
-                mid_componets[next_componet][node] = cnt    
+        for next_component, cnt in graph[node]:
+            if indegree[next_component]:
+                if node in result.keys():
+                    mid_componets[next_component][node] = cnt  
                     
-            indegree[next_componet] -= 1
+                else:
+                    # node : 5, key = (1, 2), next_component: 6
+                    for key in mid_componets[node].keys():
+                        if not key in mid_componets[next_component]:
+                            mid_componets[next_component][key] = 0
+                            
+                        mid_componets[next_component][key] += (mid_componets[node][key] * cnt)
+                
+            indegree[next_component] -= 1
             
-            if not indegree[next_componet]:
-                queue.append(next_componet)
-                
+            if not indegree[next_component]:
+                queue.append(next_component)
     
-    for component in mid_componets.keys():
-        for key in mid_componets[component].keys():
-            if key in result.keys():
-                result[key] += mid_componets[component][key]
-                
-            else:
-                cnt = mid_componets[component][key]
-                mid_componets[component].pop(key)
-                for prev_key in mid_componets[key].keys():
-                    mid_componets[component][prev_key] += (mid_componets[key][prev_key] * cnt)
-                    result[prev_key] += mid_componets[component][prev_key]
+    base_components = sorted(result.keys())
+    for c in base_components:
+        print(c, mid_componets[n][c])
     
         
 for _ in range(m):
