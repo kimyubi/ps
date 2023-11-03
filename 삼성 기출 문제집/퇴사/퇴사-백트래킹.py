@@ -10,16 +10,18 @@ for _ in range(N):
     T.append(t)
     P.append(p)
     
+    
 answer = 0
 def solution(idx, sum):
     global answer
     
     # 종료 조건
-    if idx == (N + 1):
+    if N < idx:
         answer = max(answer, sum)
         return
     
-    if idx + T[idx] <= N:
+    # 퇴사일 이내에 가능할때 상담
+    if idx + T[idx] <= N + 1:
         solution(idx + T[idx], sum + P[idx])
         
     solution(idx + 1, sum)
