@@ -1,53 +1,74 @@
 import sys
+from itertools import combinations
+from collections import defaultdict
+from copy import deepcopy
+
 input = sys.stdin.readline
 
-# 세로 선의 개수 N, 가로 선의 개수 M, 세로선마다 가로선을 놓을 수 있는 위치의 개수
-N, M, H = map(int, input().split())
-ladder = [[0] * (N + 1) for _ in range(H + 1)]
-answer = 4
+# 세로 선의 개수 n, 가로 선의 개수 m, 세로선마다 가로선을 놓을 수 있는 위치의 개수 3
+n, m, h = map(int, input().split())
+data = defaultdict(list)
 
-
-for _ in range(M):
-    # b번 세로선과 b+1번 세로선을 a번 점선 위치에서 연결했다는 의미이다.
+for _ in range(m):
     a, b = map(int, input().split())
-    ladder[a][b] = 1
-     
-def check():
-    for i in range(1, N + 1):
-        now = i
-        for j in range(1, H + 1):
-            if ladder[j][now - 1]:
-                now -= 1
-            elif ladder[j][now]:
-                now += 1
+    # b번 세로선과 b+1 세로선을 a번 점선 위치에서 연결
+    data[b].append(a)
+    
+dedicates = []
+for i in range(1, n):
+    for j in range(1, h + 1):
+        if i == 1:
+            if j not in data[i + 1] and j not in data[i]:
+                dedicates.append([i, j])
                 
-        if i != now:
+        elif i == n-1:
+            if j not in data[i-1] and j not in data[i]:
+                dedicates.append([i, j])
+                
+        else:
+            if  j not in data[i-1] and j not in data[i+1] and j not in data[i]:
+                dedicates.append([i, j])
+       
+def check(copy_data):
+    result = True
+    
+    for idx in range(1, n + 1):
+        c = idx
+        r  = 1
+        while True:
+            if h < r:
+                break
+            if c == 1:
+                if r in copy_data[c]:
+                    c += 1    
+            elif c == n:
+                if r in copy_data[c-1]:
+                    c -= 1
+            else:
+                if r in copy_data[c-1]:
+                    c -= 1
+               
+                elif r in copy_data[c]:
+                    c += 1
+            r += 1
+                    
+        if idx != c:
             return False
-    return True
+        
+    return result            
+        
 
-candidates = []
-for i in range(1, H + 1):
-    for j in range(1, N):
-        if 1 not in (ladder[i][j-1], ladder[i][j], ladder[i][j+1]):
-            candidates.append([i, j])
+def solution():        
+    answer = 4
+    for cnt in range(4):
+        for comb in combinations(dedicates, cnt):
+            copy_data = deepcopy(data)
+            for b, a in comb:
+                copy_data[b].append(a)
+                
+            if check(copy_data):
+                return cnt
+    return -1
             
-def dfs(depth, idx):
-    global answer
     
-    if 3 < depth or answer <= depth:
-        return
-    
-    if check():
-        answer = min(answer, depth)
-        return 
-    
-    for i in range(idx, len(candidates)):
-        x, y = candidates[i]
-        if 1 not in (ladder[x][y-1], ladder[x][y+1]):
-            ladder[x][y] = 1
-            dfs(depth + 1, i + 1)
-            ladder[x][y] = 0
-            
-dfs(0,0)
-print(answer if answer < 4 else -1)
-    
+print(solution())
