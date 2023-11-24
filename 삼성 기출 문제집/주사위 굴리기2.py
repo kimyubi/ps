@@ -1,3 +1,4 @@
+# 10:58~ 
 import sys
 from collections import deque
 from copy import deepcopy
@@ -107,6 +108,8 @@ for idx in range(k):
         d = change_direction(d)
         nx, ny = x + dx[d], y + dy[d]
     x, y  = nx, ny    
+    
+    dice = roll_dice(d, dice)
         
     # 주사위가 도착한 칸 (x, y)에 대한 점수를 획득한다.
     score += bfs(x, y, graph[x][y])
