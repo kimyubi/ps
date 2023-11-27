@@ -10,7 +10,7 @@ n, k = map(int, input().split())
 durability = deque(map(int, input().split()))
 
 # 올리는 위치 0, 내리는 위치 (n - 1)
-belt = deque([False for _ in range(2 * n)])
+belt = deque([False for _ in range(n)])
 
 START, END = 0, (n - 1)
 
