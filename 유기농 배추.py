@@ -37,4 +37,5 @@ for _ in range(int(input())):
                 cnt += 1
                 
     print(cnt)
+    
             
